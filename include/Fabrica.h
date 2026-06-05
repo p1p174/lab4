@@ -13,6 +13,10 @@ public:
     static Fabrica* getInstance();
 
     IControladorFechaActual* getIControladorFechaActual();
+
+    IUsuario* getIUsuario();
+
+    IViaje* getIViaje();
 };
 
 #endif

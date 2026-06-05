@@ -10,6 +10,8 @@ private:
 
 public:
     Reserva(int asientosReservados, DTFecha fecha);
+    getAsientosReservados() : int;
+    getViaje() : Viaje;
     ~Reserva();
 };
 

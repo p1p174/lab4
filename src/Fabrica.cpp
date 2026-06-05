@@ -12,6 +12,15 @@ Fabrica* Fabrica::getInstance() {
     return instancia;
 }
 
+
 IControladorFechaActual* Fabrica::getIControladorFechaActual() {
     return ControladorFechaActual::getInstance();
+}
+
+IUsuario* Fabrica::getIUsuario(){
+    return CtrlUsuario::getInstance();
+}
+
+IViaje* Fabrica::getIViaje(){
+    return CtrlViaje::getInstance();
 }

@@ -5,4 +5,9 @@ Reserva::Reserva(int asientosReservados, DTFecha fecha) {
     this->fecha = fecha;
 }
 
+
+getAsientosReservados() : int{
+    getAsientosReservados = this->asientosReservados;
+};
+
 Reserva::~Reserva() {}
