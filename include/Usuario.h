@@ -11,7 +11,8 @@ protected:
     std::string nombre;
     std::string contrasena;
     std::string email;
-    std::list<Calificacion*> calificaciones;
+    std::list<Calificacion*> calRecibidas;
+    std::list<Calificacion*> calRealizadas;
 
 public:
     Usuario(std::string nickname, std::string nombre, std::string contrasena, std::string email);
@@ -20,7 +21,8 @@ public:
     std::string getNombre();
     std::string getContrasena();
     std::string getEmail();
-    std::list<Calificacion*> getCalificaciones();
+    std::list<Calificacion*> getCalRecibidas();
+    std::list<Calificacion*> getCalRealizadas();
     virtual float getCalificacionPromedio();
     virtual bool es_pasajero();
 };

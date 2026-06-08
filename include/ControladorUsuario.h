@@ -19,12 +19,12 @@ class Pasajero;
 class CtrlUsuario : public IUsuario {
 private:
     static CtrlUsuario* instancia; //es Singleton
-    std::string nicknameMemoria;
-    int codigoMemoria;
+    std::string nicknameMemoria; //no sé si habría que guardarlo acá o en CtrlViaje
 
     CtrlUsuario();
 public:
     static CtrlUsuario* getInstance();
+    std::string getNicknameMemoria();
 
     // métodos heredados de IUsuario
     bool altaPasajero(std::string nickname, std::string nombre, std::string contrasena,
@@ -41,7 +41,7 @@ public:
     std::set<DTListarViaje*> listarViajes(std::string nickname) override;
     std::set<DTUsuarioViaje*> listarUsuariosViaje(int codigo) override;
 
-    bool calificarUsuario(std::string nicknameCalificado, std::string calificacion, int puntos) override;
+    bool calificarUsuario(std::string nicknameCalificado, int calificacion) override;
 
     virtual ~CtrlUsuario();
 };

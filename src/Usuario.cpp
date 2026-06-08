@@ -12,10 +12,11 @@ std::string Usuario::getNickname() { return this->nickname; }
 std::string Usuario::getNombre() { return this->nombre; }
 std::string Usuario::getContrasena() { return this->contrasena; }
 std::string Usuario::getEmail() { return this->email; }
-std::list<Calificacion*> Usuario::getCalificaciones() { return calificaciones; }
+std::list<Calificacion*> Usuario::getCalRecibidas() { return calRecibidas; }
+std::list<Calificacion*> Usuario::getCalRealizadas() { return calRealizadas; }
 
 float Usuario::getCalificacionPromedio() {
-    std::list<Calificacion*> listaCal = getCalificaciones();
+    std::list<Calificacion*> listaCal = getCalRecibidas();
     std::list<Calificacion*>::iterator iter = listaCal.begin();
     int suma = 0;
     int cantCals = 0; //cantidad de calificaciones
