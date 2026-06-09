@@ -8,10 +8,10 @@ std::string Pasajero::getCi() { return this->ci; }
 std::list<Reserva*> Pasajero::getReservas() { return this->reservas; }
 
 void Pasajero::addReserva(Reserva* r) {
-    reservas.push_front(r);
+    this->reservas.push_front(r);
 }
 void Pasajero::eliminarReserva(Reserva* r) {
-    reservas.remove(r);
+    this->reservas.remove(r);
 }
 
 bool Pasajero::tieneReservaEnViaje(Viaje* viaje) {
