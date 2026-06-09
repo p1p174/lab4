@@ -19,12 +19,16 @@ class Pasajero;
 class CtrlUsuario : public IUsuario {
 private:
     static CtrlUsuario* instancia; //es Singleton
-    std::string nicknameMemoria; //no sé si habría que guardarlo acá o en CtrlViaje
+    std::string nicknameMemoria;
+    int codigoMemoria;
 
     CtrlUsuario();
 public:
     static CtrlUsuario* getInstance();
     std::string getNicknameMemoria();
+    int getCodigoMemoria();
+    void setNicknameMemoria(std::string nuevo_nicknameMemoria);
+    void setCodigoMemoria(int nuevo_codigoMemoria);
 
     // métodos heredados de IUsuario
     bool altaPasajero(std::string nickname, std::string nombre, std::string contrasena,

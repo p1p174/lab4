@@ -6,7 +6,6 @@ Usuario::Usuario(std::string nickname, std::string nombre, std::string contrasen
     this->contrasena = contrasena;
     this->email = email;
 }
-Usuario::~Usuario() {}
 
 std::string Usuario::getNickname() { return this->nickname; }
 std::string Usuario::getNombre() { return this->nombre; }
@@ -49,4 +48,14 @@ float Usuario::getCalificacionPromedio() {
     }
     if (cantCals == 0) return 0;
     else return suma/cantCals;
+}
+
+Usuario::~Usuario() {
+    // solo elimina las Calificaciones recibidas
+    for (std::list<Calificacion*>::iterator it = calRecibidas.begin(); it != calRecibidas.end(); it++) {
+        delete *it;
+    }
+
+    calRecibidas.clear();
+    calRealizadas.clear();
 }

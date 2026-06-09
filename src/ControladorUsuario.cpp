@@ -10,8 +10,18 @@ CtrlUsuario* CtrlUsuario::getInstance() {
     return instancia;
 }
 std::string CtrlUsuario::getNicknameMemoria() {
-    return nicknameMemoria;
+    return this->nicknameMemoria;
 }
+int CtrlUsuario::getCodigoMemoria() {
+    return this->codigoMemoria;
+}
+void CtrlUsuario::setNicknameMemoria(std::string nuevo_nicknameMemoria){
+    this->nicknameMemoria = nuevo_nicknameMemoria;
+}
+void CtrlUsuario::setCodigoMemoria(std::string nuevo_codigoMemoria){
+    this->codigoMemoria = nuevo_codigoMemoria;
+}
+
 // Precond: La contrasena tiene al menos 8 caracteres
 bool CtrlUsuario::altaPasajero(std::string nickname, std::string nombre, std::string contrasena, std::string email, std::string ci) {
     ManejadorUsuario* manejadorU = ManejadorUsuario::getInstance();
@@ -155,7 +165,7 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     Usuario* userCador = manUsuario->getUsuario(getNicknameMemoria());
     Usuario* usuCado = manUsuario->getUsuario(nicknameCalificado);
     ManejadorViaje* manViaje = ManejadorViaje::getInstance();
-    Viaje* viaje = manViaje->getViaje(getCodigoMemoria());
+    Viaje* viaje = manViaje->getViaje(this->getCodigoMemoria());
 
     std::list<Reserva*>& reservas = viaje->getReservas();
     Reserva* reserv = NULL;
