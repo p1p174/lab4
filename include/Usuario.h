@@ -24,7 +24,9 @@ public:
     std::list<Calificacion*> getCalRecibidas();
     std::list<Calificacion*> getCalRealizadas();
     void agregarCalRecibida(Calificacion* cal);
+    void borrarCalRecibida(Calificacion* cal);
     void agregarCalRealizada(Calificacion* cal);
+    void borrarCalRealizada(Calificacion* cal);
     virtual float getCalificacionPromedio();
     virtual bool es_pasajero() = 0;
 };

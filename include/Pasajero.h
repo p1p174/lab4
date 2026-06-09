@@ -2,6 +2,7 @@
 #define PASAJERO_H
 
 #include "Usuario.h"
+#include "Viaje.h"
 #include "Reserva.h"
 #include <string>
 #include <list>
@@ -16,7 +17,9 @@ public:
     ~Pasajero();
     std::string getCi();
     std::list<Reserva*> getReservas();
-
+    void addReserva(Reserva* r);
+    void eliminarReserva(Reserva* r);
+    bool tieneReservaEnViaje(Viaje* viaje); //devuelve true si el pasajero tiene reserva en el viaje
     bool es_pasajero() override;
 };
 

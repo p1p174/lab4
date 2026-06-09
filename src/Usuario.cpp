@@ -14,13 +14,22 @@ std::string Usuario::getContrasena() { return this->contrasena; }
 std::string Usuario::getEmail() { return this->email; }
 std::list<Calificacion*> Usuario::getCalRecibidas() { return calRecibidas; }
 std::list<Calificacion*> Usuario::getCalRealizadas() { return calRealizadas; }
+
 void Usuario::agregarCalRealizada(Calificacion* cal) {
     std::list<Calificacion*>& calRealizadas = this->getCalRealizadas();
     calRealizadas.push_front(cal);
 }
+void Usuario::borrarCalRealizada(Calificacion* cal) {
+    std::list<Calificacion*>& calRealizadas = this->getCalRealizadas();
+    calRealizadas.remove(cal);
+}
 void Usuario::agregarCalRecibida(Calificacion* cal) {
     std::list<Calificacion*>& calRecibidas = this->getCalRecibidas();
     calRecibidas.push_front(cal);
+}
+void Usuario::borrarCalRecibida(Calificacion* cal) {
+    std::list<Calificacion*>& calRecibidas = this->getCalRecibidas();
+    calRecibidas.remove(cal);
 }
 
 float Usuario::getCalificacionPromedio() {
