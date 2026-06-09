@@ -23,8 +23,10 @@ public:
     std::string getEmail();
     std::list<Calificacion*> getCalRecibidas();
     std::list<Calificacion*> getCalRealizadas();
+    void agregarCalRecibida(Calificacion* cal);
+    void agregarCalRealizada(Calificacion* cal);
     virtual float getCalificacionPromedio();
-    virtual bool es_pasajero();
+    virtual bool es_pasajero() = 0;
 };
 
 #endif

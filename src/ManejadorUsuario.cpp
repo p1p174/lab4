@@ -30,6 +30,30 @@ void ManejadorUsuario::addUsuario(Usuario* usua) {
     this->usuarios[usua->getNickname()] = usua;
 }
 
+std::map<std::string, Pasajero*> ManejadorUsuario::getPasajeros() {
+    std::map<std::string, Pasajero*> pasajeros;
+
+    for (std::map<std::string, Usuario*>::iterator it = usuarios.begin(); it != usuarios.end(); ++it) {
+        if (it->second->es_pasajero()) {
+            pasajeros[it->first] = (Pasajero*)it->second;
+        }
+    }
+
+    return pasajeros;
+}
+
+Conductor* ManejadorUsuario::getConductor(std::string nickname) {
+    std::map<std::string, Usuario*>::iterator it = usuarios.find(nickname);
+
+    if (it == usuarios.end()) {
+        return NULL;
+    }
+    if (!(it->second->es_pasajero())) {
+        return (Conductor*)it->second;
+    }
+    return NULL;
+}
+
 ManejadorUsuario::~ManejadorUsuario() {
     for (auto it = usuarios.begin(); it != usuarios.end(); ++it) {
         delete it->second;

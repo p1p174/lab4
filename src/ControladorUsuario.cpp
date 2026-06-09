@@ -149,7 +149,6 @@ std::set<DTUsuarioViaje*> CtrlViaje::listarUsuariosViaje(int codigo) {
     return listaUsuariosDelViaje;
 }
 
-// ||||||| Creo que listarUsuariosViaje va en CtrlViaje :: |||||||
 // si Juan calificó a Pedro en la reserva r no puede volver a calificar la reserva r otra vez
 bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificacion) {
     ManejadorUsuario* manUsuario = ManejadorUsuario::getInstance();
@@ -159,16 +158,28 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     Viaje* viaje = manViaje->getViaje(getCodigoMemoria());
 
     std::list<Reserva*>& reservas = viaje->getReservas();
+    Reserva* reserv = NULL;
+    Reserva* reservUserCador = NULL;
+    
     // se recorre el conj. de las reservas hechas sobre el viaje
     for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
             Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
             if (pa->getNickname() == usuCado->getNickname()) {
-                Reserva* reserv = (*it); //reserva que hizo usuCado en el viaje en cuestión
-                break;
+                reserv = (*it); //reserva que hizo usuCado en el viaje en cuestión
+            }
+            if (pa->getNickname() == userCador->getNickname()) {
+                reservUserCador = (*it); //reserva que hizo usuCador en el viaje en cuestión
             }
     }
+    if (reserv==NULL && reservUserCador==NULL) { return false; }
+
+    Reserva* reservaAVerificar = reserv;
+    if (userCador->es_pasajero()) {
+        reservaAVerificar = reservUserCador;
+    }
+
     //obtengo las calificaciones hechas sobre la reserva
-    std::list<Calificacion*>& calificacionesReserva = reserv->getCalificaciones();
+    std::list<Calificacion*>& calificacionesReserva = reservaAVerificar->getCalificaciones();
     for (std::list<Calificacion*>::iterator it = calificacionesReserva.begin(); it != calificacionesReserva.end(); ++it) {
             Usuario* usu = (*it)->getUsuario(); // usuario que hizo la calificación
             if (usu->getNickname() == userCador->getNickname()) {
@@ -179,21 +190,15 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     }
     DTFecha fechaActual = IControladorFechaActual::getFecha(); //sería algo así no sé
     Calificacion* cal = new Calificacion(fechaActual, calificacion);
-    userCador.
+    userCador->agregarCalRealizada(cal);
+    usuCado->agregarCalRecibida(cal);
 
-    return true;
-}
-bool CtrlViaje::calificarUsuario(...) {
-    crear calificacion;
+    //linkear la calificación hecha con la reserva
+    reservaAVerificar->agregarCalificacion(cal);
+    cal->linkearReserva(reservaAVerificar);
 
-    vincular calificacion con:
-        calificador,
-        calificado,
-        reserva;
-
-    borrar nickname en memoria;
-    borrar codigo en memoria;
-
+    setNicknameMemoria("");
+    setCodigoMemoria("");
     return true;
 }
 

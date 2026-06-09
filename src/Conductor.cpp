@@ -4,5 +4,6 @@ Conductor::Conductor(std::string nickname, std::string nombre, std::string contr
     : Usuario(nickname, nombre, contrasena, email) {
     this->libretas = libs;
 }
+bool Conductor::es_pasajero() { return false; }
 
 Conductor::~Conductor() {}
