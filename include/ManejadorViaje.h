@@ -7,7 +7,7 @@ class ManejadorViaje{
 private:
     static ManejadorViaje* instancia;
     ManejadorViaje();
-    Map<int, Viaje>::Viajes;
+    Map<int, Viaje> Viajes;
 public:
     Viaje::getViaje();
     addViaje(Viaje);

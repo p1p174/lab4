@@ -12,17 +12,24 @@ Viaje* getViaje(codigo: int){
 
 void addViaje(Viaje){
     /*agregarlo al mapa*/
+    codigo = generarCodigo();
+    Viajes[codigo] = Viaje;
 }
 
 set<Viaje*> flitrarViajes(fecha: DTFecha, origen: String, destino: String, asientos: int){
     /*recorre el mapa preguntando si cumple con la fecha/origen/etc y si cumple lo agrega al set*/
+    /*creo un viaje para hacer la iteracion?*/
+    Viajes::iterator i;
+    for (i = Viajes.begin(); i != Viajes.end(); i++){
+        if (i = )
+    }
 }
 
 set<Reserva*> getReservas(){
 
 }
 
-void generarCodigo(){
+int generarCodigo(){
 
 }
 
