@@ -44,10 +44,7 @@ std::map<std::string, Pasajero*> ManejadorUsuario::getPasajeros() {
 
 Conductor* ManejadorUsuario::getConductor(std::string nickname) {
     std::map<std::string, Usuario*>::iterator it = usuarios.find(nickname);
-
-    if (it == usuarios.end()) {
-        return NULL;
-    }
+    
     if (!(it->second->es_pasajero())) {
         return (Conductor*)it->second;
     }

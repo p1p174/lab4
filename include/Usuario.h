@@ -16,7 +16,6 @@ protected:
 
 public:
     Usuario(std::string nickname, std::string nombre, std::string contrasena, std::string email);
-    virtual ~Usuario();
     std::string getNickname();
     std::string getNombre();
     std::string getContrasena();
@@ -29,6 +28,8 @@ public:
     void borrarCalRealizada(Calificacion* cal);
     virtual float getCalificacionPromedio();
     virtual bool es_pasajero() = 0;
+    
+    virtual ~Usuario();
 };
 
 #endif
