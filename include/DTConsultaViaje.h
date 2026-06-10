@@ -22,6 +22,13 @@ public:
   std::string getConductor();
   float getCalificacionProm();
   float getPrecioTotal();
+
+  //agrego definicion del operador <
+  bool operator<(const DTConsultaViaje& otro) const {
+    if (this->precioTotal != otro.precioTotal)
+        return this->precioTotal < otro.precioTotal;
+    return this->calificacionProm > otro.calificacionProm;
+  }
 };
 
 #endif
