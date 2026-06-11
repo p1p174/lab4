@@ -18,7 +18,7 @@ int CtrlUsuario::getCodigoMemoria() {
 void CtrlUsuario::setNicknameMemoria(std::string nuevo_nicknameMemoria){
     this->nicknameMemoria = nuevo_nicknameMemoria;
 }
-void CtrlUsuario::setCodigoMemoria(std::string nuevo_codigoMemoria){
+void CtrlUsuario::setCodigoMemoria(int nuevo_codigoMemoria){
     this->codigoMemoria = nuevo_codigoMemoria;
 }
 
@@ -208,7 +208,7 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     cal->linkearReserva(reservaAVerificar);
 
     setNicknameMemoria("");
-    setCodigoMemoria("");
+    setCodigoMemoria(0);
     return true;
 }
 
