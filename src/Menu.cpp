@@ -1,5 +1,5 @@
 #include "../include/Menu.h"
-#include "../include/Fabrica.h"
+#include "../include/Sistema.h"
 #include "../include/IControladorFechaActual.h"
 #include "../include/CargaDatos.h"
 #include "../include/DTFecha.h"
@@ -147,31 +147,73 @@ void Menu::generarReserva() {
 }
 
 void Menu::calificarUsuario() {
-    //TODO: Coleccion de DTUsuario = controlador->listarUsuarios()
-    //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Nombre: yyy"
+    Fabrica* fabrica = Sistema::getInstance()->getFabrica();
+    IUsuario* instIUsuario = fabrica->getIUsuario();
+    IViaje* instIViaje = fabrica->getIViaje();
+
+    //TODO:DTUsuario = controlador->listarUsuarios()
+    std::set<DTUsuario*> conjUsu = instIUsuario->listarUsuarios();
+    //TODO: Recorrer la coleccion std::set<DTUsuario*> conjUsuarios y mostrar "> Nickname: xx, Nombre: yyy"
+    for (std::set<DTUsuario*>::iterator it = conjUsu.begin(); it != conjUsu.end(); ++it) {
+        DTUsuario* u = *it;
+        std::cout << "> Nickname: " << u->getNickname() << ", Nombre: " << u->getNombre() << std::endl;
+    }////
+    
     std::string nickname;
     std::cout << "Ingrese su nickname: "; std::getline(std::cin, nickname);
     bool nicknameValido = false;
     //TODO: Validar nickname en listado
+    for (std::set<DTUsuario*>::iterator it = conjUsu.begin(); it != conjUsu.end(); ++it) {
+        DTUsuario* u = *it;
+        if (u->getNickname() == nickname) {
+            nicknameValido = true; // si está el nickname en el listado es válido
+            break;
+        }
+    } /////
     if (!nicknameValido) {
         std::cout << "Nickname invalido.\n";
         return;
     }
 
     //TODO: Coleccion de DTListarViaje = controlador->listarViajes(nickname)
+    std::set<DTListarViaje*> cjViajes = instIUsuario->listarViajes(nickname);
     //TODO: Recorrer la coleccion y mostrar "> Codigo: xx, Fecha: dd/mm/aaaa, Origen: zzz, Destino: www, Conductor: aaa"
+    for (std::set<DTListarViaje*>::iterator it = cjViajes.begin(); it != cjViajes.end(); ++it) {
+        DTListarViaje* viaje = *it;
+        std::cout << "> Codigo: " << viaje->getCodigo()
+              << ", Fecha: " << viaje->getFecha()
+              << ", Origen: " << viaje->getOrigen()
+              << ", Destino: " << viaje->getDestino()
+              << ", Conductor: " << viaje->getConductor()
+              << std::endl;
+    }
+    ////////
     int codigo;
     std::cout << "Ingrese codigo del viaje: "; std::cin >> codigo;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     bool codigoValido = false;
     //TODO: Validar codigo en listado
+    for (std::set<DTListarViaje*>::iterator it = cjViajes.begin(); it != cjViajes.end(); ++it) {
+        DTListarViaje* viaje = *it;
+        if (viaje->getCodigo() == codigo) {
+            codigoValido = true; // si está el código en el listado es válido
+            break;
+        }
+    }
+    //////////////////
     if (!codigoValido) {
         std::cout << "Codigo invalido.\n";
         return;
     }
 
     //TODO: Coleccion de DTUsuarioViaje = Controlador->listarUsuariosViaje(codigo)
+    std::set<DTUsuarioViaje*> conjUV = instIUsuario->listarUsuariosViaje(codigo);
     //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Tipo: yyy"
+    for (std::set<DTUsuarioViaje*>::iterator it = conjUV.begin(); it != conjUV.end(); ++it) {
+        DTUsuarioViaje* uv = *it;
+        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << uv->getTipo() << std::endl;
+    }
+    ///////
     std::string nicknameCalificado;
     int calificacion;
     std::cout << "Ingrese nickname del usuario a calificar: "; std::getline(std::cin, nicknameCalificado);
@@ -179,6 +221,15 @@ void Menu::calificarUsuario() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     bool nicknameCalificadoValido = false;
     //TODO: Validar nickname en listado
+    for (std::set<DTUsuarioViaje*>::iterator it = conjUV.begin(); it != conjUV.end(); ++it) {
+        DTUsuarioViaje* uv = *it;
+        if (uv->getNickname() == nicknameCalificado) {
+            nicknameCalificadoValido = true; // si está el nickname en el listado es válido
+            break;
+        }
+    }
+    //////
+
     if (!nicknameCalificadoValido) {
         std::cout << "Nickname invalido.\n";
         return;
@@ -186,6 +237,8 @@ void Menu::calificarUsuario() {
 
     bool calificacionOk = false;
     //TODO: calificacionOk = Controlador->calificarUsuario(nicknameCalificado, calificacion)
+    calificacionOk = instIUsuario->calificarUsuario(nicknameCalificado, calificacion);
+    //////
     if (calificacionOk) {
         std::cout << "Calificacion exitosa.\n";
     } else {

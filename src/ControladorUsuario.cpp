@@ -1,4 +1,6 @@
 #include "../include/ControladorUsuario.h"
+#include "../include/Sistema.h"
+//#include "../include/Fabrica.h"
 
 CtrlUsuario* CtrlUsuario::instancia = nullptr;
 CtrlUsuario::CtrlUsuario() {}
@@ -103,7 +105,9 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
 
     if (user->es_pasajero()) {
         //es pasajero
-        std::list<Reserva*>& reservas = user->getReservas();
+        Pasajero* p = dynamic_cast<Pasajero*>(user);
+        std::list<Reserva*>& reservas = p->getReservas();
+
         for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
             Viaje* vi = (*it)->getViaje();
             int codigoVi = vi->getCodigo();
@@ -115,10 +119,12 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
             listaViajes.insert(dtV);
         }
     } else {
-        std::list<Vehiculo*>& vehiculos = user->getVehiculos();
-        for (std::list<Vehiculo*>::iterator it = vehiculos.begin(); it != vehiculos.end(); ++it) {
-            std::list<Viaje*>& viajes = (*it)->getViajes();
-            for (std::list<Viaje*>::iterator iter = viajes.begin(); iter != viajes.end(); ++iter) {
+        Conductor* c = dynamic_cast<Conductor*>(user);
+        std::set<Vehiculo*>& vehiculos = c->getVehiculos();
+        
+        for (std::set<Vehiculo*>::iterator it = vehiculos.begin(); it != vehiculos.end(); ++it) {
+            std::set<Viaje*>& viajes = (*it)->getViajes();
+            for (std::set<Viaje*>::iterator iter = viajes.begin(); iter != viajes.end(); ++iter) {
                 int codigoVi = (*iter)->getCodigo();
                 DTFecha fechaVi = (*iter)->getFecha();
                 std::string origenVi = (*iter)->getOrigen();
@@ -128,23 +134,23 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
             }
         }
     }
-    this->nicknameUsuario = nickname; //Se guarda en memoria el nickname pasado por parámetro
+    setNicknameMemoria(nickname); //Se guarda en memoria el nickname pasado por parámetro
     return listaViajes;
 }
 
 // ||||||| Creo que listarUsuariosViaje va en CtrlViaje :: |||||||
 // Precond:  Existe una instancia de Viaje vi con vi.codigo = codigo
 //Devuelve la información de los nicknames y nombre de todos los usuarios relacionados al viaje
-std::set<DTUsuarioViaje*> CtrlViaje::listarUsuariosViaje(int codigo) {
+std::set<DTUsuarioViaje*> CtrlUsuario::listarUsuariosViaje(int codigo) {
     ManejadorViaje* manViaje = ManejadorViaje::getInstance();
     Viaje* viaje = manViaje->getViaje(codigo); // viaje con el código pasado por parámetro
-    std::list<Reserva*>& reservas = viaje->getReservas(); // reservas del viaje
+    std::set<Reserva*>& reservas = viaje->getReservas(); // reservas del viaje
     Vehiculo* vehiculo = viaje->getVehiculo(); // vehículo del viaje
     Conductor* conductor = vehiculo->getConductor(); // conductor del viaje
     std::string nicknameMem = getNicknameMemoria(); // nickname en memoria
     std::set<DTUsuarioViaje*> listaUsuariosDelViaje;
 
-    for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); it++) {
+    for (std::set<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); it++) {
         Pasajero* pasajero = (*it)->getPasajero();
         std::string nickPasajero = pasajero->getNickname();
         if (nickPasajero != nicknameMem) { //si un usu tiene 2 rservas en 1 viaje aparece 2 veces
@@ -167,12 +173,12 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     ManejadorViaje* manViaje = ManejadorViaje::getInstance();
     Viaje* viaje = manViaje->getViaje(this->getCodigoMemoria());
 
-    std::list<Reserva*>& reservas = viaje->getReservas();
+    std::set<Reserva*>& reservas = viaje->getReservas();
     Reserva* reserv = NULL;
     Reserva* reservUserCador = NULL;
     
     // se recorre el conj. de las reservas hechas sobre el viaje
-    for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
+    for (std::set<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
             Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
             if (pa->getNickname() == usuCado->getNickname()) {
                 reserv = (*it); //reserva que hizo usuCado en el viaje en cuestión
@@ -189,8 +195,8 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     }
 
     //obtengo las calificaciones hechas sobre la reserva
-    std::list<Calificacion*>& calificacionesReserva = reservaAVerificar->getCalificaciones();
-    for (std::list<Calificacion*>::iterator it = calificacionesReserva.begin(); it != calificacionesReserva.end(); ++it) {
+    std::set<Calificacion*>& calificacionesReserva = reservaAVerificar->getCalificaciones();
+    for (std::set<Calificacion*>::iterator it = calificacionesReserva.begin(); it != calificacionesReserva.end(); ++it) {
             Usuario* usu = (*it)->getUsuario(); // usuario que hizo la calificación
             if (usu->getNickname() == userCador->getNickname()) {
                 return false; 
@@ -198,8 +204,8 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
                 // entonces no puede hacer otra
             }
     }
-    DTFecha fechaActual = IControladorFechaActual::getFecha(); //sería algo así no sé
-    Calificacion* cal = new Calificacion(fechaActual, calificacion);
+    DTFecha* fechaActual = Sistema::getInstance()->getFabrica()->getIControladorFechaActual()->getFechaActual();
+    Calificacion* cal = new Calificacion(*fechaActual, calificacion);
     userCador->agregarCalRealizada(cal);
     usuCado->agregarCalRecibida(cal);
 

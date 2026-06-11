@@ -4,6 +4,7 @@
 #include "IUsuario.h"
 #include "ManejadorUsuario.h"
 #include "ManejadorVehiculo.h"
+#include "ManejadorViaje.h"
 #include "Pasajero.h"
 #include "Vehiculo.h"
 #include "Viaje.h"
@@ -13,9 +14,11 @@
 #include "TipoVehiculo.h"
 #include "DTListarViaje.h"
 #include "DTUsuarioViaje.h"
+#include "DTFecha.h"
+
 #include <string>
 #include <set>
-class Pasajero;
+
 class CtrlUsuario : public IUsuario {
 private:
     static CtrlUsuario* instancia; //es Singleton
