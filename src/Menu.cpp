@@ -69,12 +69,24 @@ void Menu::altaViaje() {
     float precio;
 
     std::cout << "Ingrese nickname del conductor: "; std::getline(std::cin, nickname);
+    //obtengo interfaz correspondiente
+    IUsuario* ctrlUsuario = Fabrica::getInstance()->getIUsuario();
     //TODO: Coleccion de DTVehiculosConductor = controlador->listarVehiculosConductor(nickname)
+    std::set<DTVehiculosConductor*> vehiculosConductor = ctrlUsuario->listarVehiculosConductor(nickname);
     //TODO: Recorrer la coleccion y mostrar "> Matricula: xx, Capacidad: yy, Marca: zzz, Modelo: www, Tipo: ttt"
+    //todo de arriba mal redactado: solo mostrar "> Matricula: xx, Modelo: yy, Capacidad: zz"
+    for(DTVehiculosConductor* it : vehiculosConductor){
+        std::cout << "> Matricula: " << it->getMatricula() << ", Modelo: " << it->getModelo() << ", Capacidad: " << it->getCapacidad() << std::endl;
+    }
 
     std::cout << "Ingrese matricula del vehiculo a utilizar: "; std::getline(std::cin, matricula);
     bool matriculaValida = false;
     //TODO: Validar matricula en listado
+    for(DTVehiculosConductor* it : vehiculosConductor){
+        if(it->getMatricula() == matricula){
+            matriculaValida = true;
+        }
+    }
     if (!matriculaValida) {
         std::cout << "Matricula invalida.\n";
         return;
@@ -88,7 +100,10 @@ void Menu::altaViaje() {
     std::cout << "Ingrese precio por asiento: "; std::cin >> precio;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     bool viajeOk = false;
+    //obtengo interfaz correspondiente
+    IViaje* ctrlViaje = Fabrica::getInstance()->getIViaje();
     //TODO: viajeOk = controlador->altaViaje(matricula, DTFecha(dia, mes, anio), origen, destino, asientos, precio)
+    viajeOK = ctrlViaje->altaViaje(matricula, DTFecha(dia, mes, anio), origen, destino, asientos, precio);
     if (viajeOk) {
         std::cout << "Viaje registrado exitosamente.\n";
     } else {
