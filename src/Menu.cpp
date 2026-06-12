@@ -99,11 +99,22 @@ void Menu::altaViaje() {
 void Menu::generarReserva() {
     //TODO: Colecion de String = controlador->listarPasajeros()
     //TODO: Recorrer la colección y mostrar "> xx"
+    std::set<std::string> pasajeros = CtrlViaje->listarPasajeros();
+    for (std::set<std::string>::iterator i = pasajeros.begin(); i != pasajeros.end(); i++){
+        std::cout << "> " << *i << "\n";
+    };
     std::string nickname;
     std::cout << "Ingrese nickname del pasajero: "; std::getline(std::cin, nickname);
 
     bool nicknameValido = false;
     //TODO: Validar nickname en listado
+    for (std::set<std::string>::iterator i = pasajeros.begin(); i != pasajeros.end(); i++){
+        if (*i == nickname){ 
+            nicknameValido = true;
+            break;
+        };
+    };
+
     if (!nicknameValido) {
         std::cout << "Nickname invalido.\n";
         return;
@@ -120,8 +131,22 @@ void Menu::generarReserva() {
 
     //TODO: Coleccion de DTConsultaViaje = controlador->consultarViajes(DTFecha(dia, mes, anio), origen, destino, asientos)
     //TODO: Recorrer la coleccion y mostrar: "> Codigo: xx, Marca: yy, Modelo: zzz, Conductor: aaa, CalificacionPromedio: qqq, PrecioTotal: eee"
-
+    std::set<DTConsultaViaje> consViaje = CtrlViaje->consultarViajes(DTFecha(dia, mes, anio), origen, destino, asientos);
+    for (std::set<std::DTCondutlaViaje>::iterator i = consViaje.begin(); i != consViaje.end(); i++){
+        std::cout << "> Codigo: ", i->getCodigo()
+                  << ", Marca: ", i->getMarca()
+                  << ", Modelo: ", i->getModelo()
+                  << ", Conductor: ", i->getConductor()
+                  << ", CalificacionPromedio", i->getCalificacionProm()
+                  << ", PrecioTotal: ", i->getPrecioTotal() << "\n";
+    } 
+    
     bool hayViajes = false;//TODO: Validar coleccion vacía
+
+    if (!consViaje.empty()){
+        hayViajes = true;
+    }
+
     if (!hayViajes) {
         std::cout << "No hay viajes disponibles.\n";
         return;
@@ -132,6 +157,13 @@ void Menu::generarReserva() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     bool codigoValido = false;
     //TODO: Validar codigo en listado
+    for(std::set<DTConsultaViaje>::iterator i = consViaje.begin(); i != consViaje.end(), i++){
+        if (i->getCodigo() == codigo){
+            codigoValido = true;
+            break;
+        }
+    }
+
     if (!codigoValido) {
         std::cout << "Codigo invalido.\n";
         return;
@@ -139,6 +171,7 @@ void Menu::generarReserva() {
 
     bool reservaOk = false;
     //TODO: reservaOk = controlador->generarReserva(nickname, codigo, asientos)
+    reservaOk = CtrlViaje->generarReserva(nickname, codigo, asientos);
     if (reservaOk) {
         std::cout << "Reserva realizada exitosamente.\n";
     } else {
