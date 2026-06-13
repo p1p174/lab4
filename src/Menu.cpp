@@ -248,7 +248,7 @@ void Menu::calificarUsuario() {
 
 void Menu::eliminarViaje() {
     Fabrica* fabrica = Fabrica::getInstance();
-    IViaje* ctrlV = fabrica->getIviaje();
+    IViaje* ctrlV = fabrica->getIViaje();
 
     std::set<DTListarViaje*> viajes = ctrlV->listarViajes();
     for (DTListarViaje* v : viajes) {
@@ -280,19 +280,19 @@ void Menu::eliminarViaje() {
     DTDetalleViaje* detalle = ctrlV->detalleViaje(codigo);
 
     std::cout << ">> Viaje <<\n";
-    std::cout << "--- Codigo: " << detalle->getCodigo();
-            << ", Fecha: " << detalle->getFecha();
-            << ", Origen: " << detalle->getOrigen();
-            << ", Destino: " << detalle->getDestino();
-            << ", AsientosPublicados: " << detalle->getAsientosPublicados();
+    std::cout << "--- Codigo: " << detalle->getCodigo()
+            << ", Fecha: " << detalle->getFecha()
+            << ", Origen: " << detalle->getOrigen()
+            << ", Destino: " << detalle->getDestino()
+            << ", AsientosPublicados: " << detalle->getAsientosPublicados()
             << ", Precio por asiento: " << detalle->getPrecio() << "\n";
             
     std::cout << ">> Vehiculo <<\n";
     DTDetalleVehiculo dv = detalle->getVehiculo();
-    std::cout << "--- Matricula: " << dv.getMatricula();
-            << ", Capacidad: " << dv.getCapacidad();
-            << ", Marca: " << dv.getMarca();
-            << ", Modelo: " << dv.getModelo();
+    std::cout << "--- Matricula: " << dv.getMatricula()
+            << ", Capacidad: " << dv.getCapacidad()
+            << ", Marca: " << dv.getMarca()
+            << ", Modelo: " << dv.getModelo()
             << ", Tipo: " << (dv.getTipo() == Auto ? "Auto" : "Moto") << "\n";
 
         std::cout << ">> Reservas <<\n";
