@@ -3,7 +3,7 @@
 Calificacion::Calificacion(DTFecha fecha, int puntaje, Usuario* u) {
     this->fecha = fecha;
     this->puntaje = puntaje;
-    this->reserva = NULL;
+    this->reserva = nullptr;
     this->usuario = u;
 }
 
