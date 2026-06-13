@@ -2,10 +2,13 @@
 #define PASAJERO_H
 
 #include "Usuario.h"
-#include "Viaje.h"
-#include "Reserva.h"
+//#include "Viaje.h"
+//#include "Reserva.h"
 #include <string>
 #include <list>
+
+class Reserva;
+class Viaje;
 
 class Pasajero : public Usuario {
 private:

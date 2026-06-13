@@ -1,4 +1,11 @@
 #include "../include/Conductor.h"
+#include "../include/TipoVehiculo.h"
+#include "../include/TipoLibreta.h"
+#include "../include/Usuario.h"
+#include "../include/DTVehiculosConductor.h"
+#include "../include/Viaje.h"
+
+#include <set>
 
 Conductor::Conductor(std::string nickname, std::string nombre, std::string contrasena, std::string email, std::set<TipoLibreta> libs)
     : Usuario(nickname, nombre, contrasena, email) {
@@ -16,7 +23,13 @@ bool Conductor::puedeRegistrar(TipoVehiculo tipo) {
     return false;
 }
 
+//agrego getter -pia-
+std::set<Vehiculo*> getVehiculos(){
+    return this->vehiculos;
+}
+
 bool Conductor::hayViajesFechaConductor(DTFecha fecha) {
+    std::set<Vehiculo*> vehiculos = getVehiculos();
     for (Vehiculo* v: vehiculos) {
         if (v->hayViajesFecha(fecha)) {
             return true;
@@ -27,6 +40,7 @@ bool Conductor::hayViajesFechaConductor(DTFecha fecha) {
 
 std::set<DTVehiculosConductor> Conductor::listarVehiculos() {
     std::set<DTVehiculosConductor> result;
+    std::set<Vehiculo*> vehiculos = getVehiculos();
     for (Vehiculo* v: vehiculos) {
         result.insert(v->getDTVehiculosConductor());
     }

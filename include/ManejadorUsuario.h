@@ -1,11 +1,15 @@
 #ifndef MANEJADOR_USUARIO_H
 #define MANEJADOR_USUARIO_H
-#include "Usuario.h"
-#include "Pasajero.h"
-#include "Conductor.h"
+//#include "Usuario.h"
+//#include "Pasajero.h"
+//#include "Conductor.h"
 
 #include <string>
 #include <map>
+
+class Usuario;
+class Pasajero;
+class Conductor;
 
 class ManejadorUsuario {
 private:

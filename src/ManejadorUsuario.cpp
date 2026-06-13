@@ -1,4 +1,7 @@
 #include "../include/ManejadorUsuario.h"
+#include "../include/Usuario.h"
+#include "../include/Pasajero.h"
+#include "../include/Conductor.h"
 
 ManejadorUsuario* ManejadorUsuario::instancia = nullptr;
 ManejadorUsuario::ManejadorUsuario() {}

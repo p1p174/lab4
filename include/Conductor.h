@@ -3,9 +3,12 @@
 
 #include "Usuario.h"
 #include "TipoLibreta.h"
-#include "Vehiculo.h"
+#include "TipoVehiculo.h"
+//#include "Vehiculo.h"
 #include "DTVehiculosConductor.h"
 #include <set>
+
+class Vehiculo;
 
 class Conductor : public Usuario {
 private:
@@ -20,6 +23,9 @@ public:
     std::set<DTVehiculosConductor> listarVehiculos();
     bool es_pasajero() override;
     ~Conductor();
+
+    //agrego getter -pia-
+    std::set<Vehiculo*> getVehiculos();
 };
 
 #endif
