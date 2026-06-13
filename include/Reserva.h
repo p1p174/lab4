@@ -3,6 +3,8 @@
 
 #include "DTFecha.h"
 
+class Viaje; 
+
 class Reserva {
 private:
     int asientosReservados;
@@ -10,8 +12,8 @@ private:
 
 public:
     Reserva(int asientosReservados, DTFecha fecha);
-    getAsientosReservados() : int;
-    getViaje() : Viaje;
+    int getAsientosReservados();
+    Viaje* getViaje();
     ~Reserva();
 };
 

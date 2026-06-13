@@ -21,12 +21,16 @@ bool Vehiculo::hayViajesFecha(DTFecha fecha) {
     return false;
 }
 
-DTVehiculoConductor Vehiculo::getDTVehiculoConductor() {
-    return DTVehiculoConductor(this->matricula, this->capacidad, this->marca, this->modelo, this->tipo);
+DTVehiculosConductor Vehiculo::getDTVehiculosConductor() {
+    return DTVehiculosConductor(this->matricula, this->capacidad, this->marca, this->modelo, this->tipo);
 }
 
 std::string Vehiculo::getMatricula() {
     return this->matricula;
+}
+
+int Vehiculo::getCapacidad() {
+    return this->capacidad;
 }
 
 std::string Vehiculo::getMarca() {

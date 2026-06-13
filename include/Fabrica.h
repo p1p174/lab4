@@ -2,6 +2,8 @@
 #define FABRICA_H
 
 #include "IControladorFechaActual.h"
+#include "IUsuario.h"
+#include "IViaje.h"
 
 class Fabrica {
 private:

@@ -8,3 +8,8 @@ DTVehiculosConductor::DTVehiculosConductor(std::vector<DTDetalleVehiculo> vehicu
 std::vector<DTDetalleVehiculo> DTVehiculosConductor::getVehiculos() {
     return vehiculos;
 }
+
+// std::set ordena automaticamente los elementos, por eso necesitamos la funcion para que logre comparar y asi poner uno primero y otro despues
+bool DTVehiculosConductor::operator<(const DTVehiculosConductor& otro) const {
+    return matricula < otro.matricula;
+}

@@ -3,6 +3,8 @@
 
 #include "Usuario.h"
 #include "TipoLibreta.h"
+#include "Vehiculo.h"
+#include "DTVehiculosConductor.h"
 #include <set>
 
 class Conductor : public Usuario {
@@ -15,7 +17,7 @@ public:
     void addVehiculo(Vehiculo* v);
     bool puedeRegistrar(TipoVehiculo tipo);
     bool hayViajesFechaConductor(DTFecha fecha);
-    std::set<DTVehiculoConductor> listarVehiculos();
+    std::set<DTVehiculosConductor> listarVehiculos();
     bool es_pasajero() override;
     ~Conductor();
 };
