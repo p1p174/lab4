@@ -20,18 +20,18 @@
 
 CtrlViaje* CtrlViaje::instancia = nullptr; // inicializo la intancia
 
-void CtrlViaje::CtrlViaje(){
+CtrlViaje::CtrlViaje(){
     this->codigoMemoria = -1;
 }
 
 CtrlViaje* CtrlViaje::getInstance(){
-    if(this->instancia == nullptr){
-        this->instancia = new CtrlViaje();
+    if(instancia == nullptr){
+        instancia = new CtrlViaje();
     }
-    return this->instancia;
+    return instancia;
 }
 
-bool CtrViaje::altaViaje(std::string matricula, DTFecha fecha, std::string origen, std::string destino, int asientos, float precio){
+bool CtrlViaje::altaViaje(std::string matricula, DTFecha fecha, std::string origen, std::string destino, int asientos, float precio){
     ManejadorVehiculo* mVehiculo = ManejadorVehiculo::getInstance();
     Vehiculo* v = mVehiculo->getVehiculo(matricula);
 
@@ -45,7 +45,7 @@ bool CtrViaje::altaViaje(std::string matricula, DTFecha fecha, std::string orige
     }
 
     ManejadorViaje* mViaje = ManejadorViaje::getInstance();
-    Viaje* vi = mViaje->crearViaje(v,fecha,origen.destino,asientos,precio);
+    Viaje* vi = mViaje->crearViaje(v,fecha,origen,destino,asientos,precio);
     mViaje->add(vi);
     v->addViaje(vi);
 
@@ -96,7 +96,7 @@ bool CtrlViaje::generarReserva(std::string nickname, int codigo, int asientos){
         return false;
     }
 
-    DTFecha fechaActual = CtrlFechaActual::getInstance()->getFechaActual();
+    DTFecha fechaActual = ControladorFechaActual::getInstance()->getFecha();
     Reserva* r = new Reserva(asientos, fechaActual);
 
     //asocio la reserva al pasajero y viaje
@@ -110,23 +110,23 @@ bool CtrlViaje::generarReserva(std::string nickname, int codigo, int asientos){
     return true;
 }
 
-std::set<DTListarViaje> CtrlViaje::listarViajes(){
+std::set<DTListarViaje*> CtrlViaje::listarViajes(){
     ManejadorViaje* mViaje = ManejadorViaje::getInstance()
     std::map<int,Viaje*> viajes = mViaje->getViajes();
 
-    std::set<DTListarViaje> resultado;
+    std::set<DTListarViaje*> resultado;
     for(auto& par : viajes){
         Viaje* vi = par.second;
         Vehiculo* v = vi->getVehiculo();
         Conductor* c = v->getConductor();
         
-        int codigo = vi->getCodigo;
-        DTFecha fecha = vi->getFecha;
-        std::string origen = vi->getOrigen;
-        std::string destino = vi->getDestino;
+        int codigo = vi->getCodigo();
+        DTFecha fecha = vi->getFecha();
+        std::string origen = vi->getOrigen();
+        std::string destino = vi->getDestino();
         std::string conductor = c->getNickname();
 
-        DTListarViaje dt = new DTListarViaje(codigo,fecha,origen,destino,conductor);
+        DTListarViaje* dt = new DTListarViaje(codigo,fecha,origen,destino,conductor);
         resultado.insert(dt);
     }
     
@@ -137,7 +137,7 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
     ManejadorViaje* mViaje = ManejadorViaje::getInstance();
     Viaje* vi = mViaje->getViaje(codigo);
 
-    int codigo = vi->getCodigo;
+    int codigo = vi->getCodigo();
     DTFecha fecha = vi->getFecha();
     std::string origen = vi->getOrigen();
     std::string destino = vi->getDestino();
@@ -151,7 +151,7 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
     std::string marca = v->getMarca();
     std::string modelo = v->getModelo();
     TipoVehiculo tipo = v->getTipo();
-    DTDetalleVehiculo dtv = new DTDetalleVehiculo(matricula,capacidad,marca,modelo,tipo);
+    DTDetalleVehiculo dtv = DTDetalleVehiculo(matricula,capacidad,marca,modelo,tipo);
 
     //construccion DTDetalleReserva
     std::vector<DTDetalleReserva> reservasDT;
@@ -160,11 +160,11 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
         DTFecha fecha = r->getFecha();
         std::string pasajero = r->getPasajero();
 
-        DTDetalleReserva dtr = new DTDetalleReserva(asientosReservados,fecha,pasajero);
+        DTDetalleReserva dtr = DTDetalleReserva(asientosReservados,fecha,pasajero);
         reservasDT.push_back(dtr);
     }
 
-    DTDetellaViaje dtvi = new DTDetalleViaje(codigo,fecha,origen,destino,asientosPublicados,precio,dtv,reservasDT);
+    DTDetalleViaje dtvi = DTDetalleViaje(codigo,fecha,origen,destino,asientosPublicados,precio,dtv,reservasDT);
     return dtvi;
 }
 
