@@ -37,31 +37,27 @@ void Menu::altaUsuario() {
         std::string ci;
         std::cout << "Ingrese CI: "; std::getline(std::cin, ci);
         usuarioOk = ctrlU->altaPasajero(nickname, nombre, contrasena, email, ci);
-        //agrego esto. que les parece?
-        if (usuarioOk) {
-            std::cout << "Pasajero registrado exitosamente.\n";
-        } else {
-            std::cout << "No se pudo registrar el pasajero. Ya existe un usuario con ese nickname.\n";
-        }
     } else if (tipoUsuario == 2) {
         std::set<TipoLibreta> libretas;
         int libreta;
         int agregarLibreta = 1;
+        std::cout << "\n";
         while (agregarLibreta == 1) {
-            std::cout << "Ingrese libreta (0: MotoProfesional, 1: MotoAmateur, 2: AutoProfesional, 3: AutoAmateur): ";
+            std::cout << "== Regestirar Libreta ==\n";
+            std::cout << "0. Moto (Profesional)\n";
+            std::cout << "1. Moto (Amateur)\n";
+            std::cout << "2. Auto (Profesional)\n";
+            std::cout << "3. Auto (Amateur)\n";
+            std::cout << "Seleccione el tipo de libreta: ";
             std::cin >> libreta;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             libretas.insert((TipoLibreta)libreta);
-            std::cout << "¿Agregar otra libreta? (1: Si, 0: No): ";
+            std::cout << "Libreta agregada.\n";
+            std::cout << "Desea agregar otra libreta? (1: Si, 0: No): ";
             std::cin >> agregarLibreta;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         usuarioOk = ctrlU->altaConductor(nickname, nombre, contrasena, email, libretas);
-        if (usuarioOk) {
-            std::cout << "Conductor registrado exitosamente.\n";
-        } else {
-            std::cout << "No se pudo registrar el conductor. Ya existe un usuario con ese nickname.\n";
-        }
         int agregarVehiculo = 1;
         while (usuarioOk == true && agregarVehiculo == 1) {
             std::string matricula, marca, modelo;
@@ -191,7 +187,7 @@ void Menu::generarReserva() {
                   << ", Marca: " << v->getMarca()
                   << ", Modelo: " << v->getModelo()
                   << ", Conductor: " << v->getConductor()
-                  << ", CalificacionPromedio" << v->getCalificacionProm()
+                  << ", CalificacionPromedio: " << v->getCalificacionProm()
                   << ", PrecioTotal: " << v->getPrecioTotal() << "\n";
     } 
     
@@ -302,7 +298,7 @@ void Menu::calificarUsuario() {
     //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Tipo: yyy"
     for (std::set<DTUsuarioViaje*>::iterator it = conjUV.begin(); it != conjUV.end(); ++it) {
         DTUsuarioViaje* uv = *it;
-        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << uv->getTipo() << std::endl;
+        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << (uv->getTipo() == Tipo.Usuario_ ? "Conductor" : "Pasajero") << std::endl;
     }
     ///////
     std::string nicknameCalificado;
