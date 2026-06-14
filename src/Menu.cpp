@@ -43,7 +43,7 @@ void Menu::altaUsuario() {
         int agregarLibreta = 1;
         std::cout << "\n";
         while (agregarLibreta == 1) {
-            std::cout << "== Regestirar Libreta ==\n";
+            std::cout << "=== Registrar Libreta ===\n";
             std::cout << "0. Moto (Profesional)\n";
             std::cout << "1. Moto (Amateur)\n";
             std::cout << "2. Auto (Profesional)\n";
@@ -53,7 +53,7 @@ void Menu::altaUsuario() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             libretas.insert((TipoLibreta)libreta);
             std::cout << "Libreta agregada.\n";
-            std::cout << "Desea agregar otra libreta? (1: Si, 0: No): ";
+            std::cout << "¿Desea agregar otra libreta? (1: Si, 0: No): ";
             std::cin >> agregarLibreta;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -298,7 +298,7 @@ void Menu::calificarUsuario() {
     //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Tipo: yyy"
     for (std::set<DTUsuarioViaje*>::iterator it = conjUV.begin(); it != conjUV.end(); ++it) {
         DTUsuarioViaje* uv = *it;
-        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << (uv->getTipo() == Tipo.Usuario_ ? "Conductor" : "Pasajero") << std::endl;
+        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << uv->getTipo()  << std::endl; //== Tipo.Usuario_ ? "Conductor" : "Pasajero")
     }
     ///////
     std::string nicknameCalificado;
