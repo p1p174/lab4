@@ -181,13 +181,15 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     
     // se recorre el conj. de las reservas hechas sobre el viaje
     for (std::set<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
-            Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
+        Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
+        if (pa != nullptr){
             if (pa->getNickname() == usuCado->getNickname()) {
                 reserv = (*it); //reserva que hizo usuCado en el viaje en cuestión
             }
             if (pa->getNickname() == userCador->getNickname()) {
                 reservUserCador = (*it); //reserva que hizo usuCador en el viaje en cuestión
             }
+        }
     }
     if (reserv==NULL && reservUserCador==NULL) { return false; }
 

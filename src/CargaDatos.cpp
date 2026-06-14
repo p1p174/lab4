@@ -98,13 +98,13 @@ void CargaDatos::cargarDatos() {
     //calificaciones
     {auto tmp = ctrlU->listarViajes("santi_90"); for (auto* p : tmp) delete p;}
     {auto tmp = ctrlU->listarUsuariosViaje(9); for (auto* p : tmp) delete p;}
-    ctrlU->calificarUsuario("mati192", 4);
+    ctrlU->calificarUsuario("matil92", 4);
 
     {auto tmp = ctrlU->listarViajes("mari_b"); for (auto* p : tmp) delete p;}
     {auto tmp = ctrlU->listarUsuariosViaje(9); for (auto* p : tmp) delete p;}
-    ctrlU->calificarUsuario("mati192", 4);
+    ctrlU->calificarUsuario("matil92", 4);
 
-    {auto tmp = ctrlU->listarViajes("mati192"); for (auto* p : tmp) delete p;}
+    {auto tmp = ctrlU->listarViajes("matil92"); for (auto* p : tmp) delete p;}
     {auto tmp = ctrlU->listarUsuariosViaje(9); for (auto* p : tmp) delete p;}
     ctrlU->calificarUsuario("mari_b", 3);
 
@@ -114,7 +114,7 @@ void CargaDatos::cargarDatos() {
 
     {auto tmp = ctrlU->listarViajes("ana_silva"); for (auto* p : tmp) delete p;}
     {auto tmp = ctrlU->listarUsuariosViaje(10); for (auto* p : tmp) delete p;}
-    ctrlU->calificarUsuario("joaco-r", 5);
+    ctrlU->calificarUsuario("joaco_r", 5);
 
     {auto tmp = ctrlU->listarViajes("mari_b"); for (auto* p : tmp) delete p;}
     {auto tmp = ctrlU->listarUsuariosViaje(12); for (auto* p : tmp) delete p;}
