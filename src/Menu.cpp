@@ -87,6 +87,7 @@ void Menu::altaViaje() {
             matriculaValida = true;
         }
     }
+    for(DTVehiculosConductor* it : vehiculosConductor) delete it;
     if (!matriculaValida) {
         std::cout << "Matricula invalida.\n";
         return;
@@ -182,6 +183,8 @@ void Menu::generarReserva() {
         }
     }
 
+    for (DTConsultaViaje* dt : consViaje) delete dt;
+
     if (!codigoValido) {
         std::cout << "Codigo invalido.\n";
         return;
@@ -222,10 +225,11 @@ void Menu::calificarUsuario() {
         }
     } /////
     if (!nicknameValido) {
+        for (DTUsuario* u : conjUsu) delete u;
         std::cout << "Nickname invalido.\n";
         return;
     }
-
+    for (DTUsuario* u : conjUsu) delete u;
     //TODO: Coleccion de DTListarViaje = controlador->listarViajes(nickname)
     std::set<DTListarViaje*> cjViajes = instIUsuario->listarViajes(nickname);
     //TODO: Recorrer la coleccion y mostrar "> Codigo: xx, Fecha: dd/mm/aaaa, Origen: zzz, Destino: www, Conductor: aaa"
@@ -253,10 +257,11 @@ void Menu::calificarUsuario() {
     }
     //////////////////
     if (!codigoValido) {
+        for (DTListarViaje* v : cjViajes) delete v;
         std::cout << "Codigo invalido.\n";
         return;
     }
-
+    for (DTListarViaje* v : cjViajes) delete v;
     //TODO: Coleccion de DTUsuarioViaje = Controlador->listarUsuariosViaje(codigo)
     std::set<DTUsuarioViaje*> conjUV = instIUsuario->listarUsuariosViaje(codigo);
     //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Tipo: yyy"
@@ -282,10 +287,11 @@ void Menu::calificarUsuario() {
     //////
 
     if (!nicknameCalificadoValido) {
+        for (DTUsuarioViaje* uv : conjUV) delete uv;
         std::cout << "Nickname invalido.\n";
         return;
     }
-
+    for (DTUsuarioViaje* uv : conjUV) delete uv;
     bool calificacionOk = false;
     //TODO: calificacionOk = Controlador->calificarUsuario(nicknameCalificado, calificacion)
     calificacionOk = instIUsuario->calificarUsuario(nicknameCalificado, calificacion);
