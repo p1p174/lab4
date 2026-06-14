@@ -5,7 +5,12 @@ ManejadorViaje* ManejadorViaje::instancia = nullptr;
 
 ManejadorViaje::ManejadorViaje() {}
 
-ManejadorViaje::~ManejadorViaje() {}
+ManejadorViaje::~ManejadorViaje() {
+    for (auto& par : viajes) {
+        delete par.second;
+    }
+    viajes.clear();
+}
 
 ManejadorViaje* ManejadorViaje::getInstance() {
     if (instancia == nullptr) {

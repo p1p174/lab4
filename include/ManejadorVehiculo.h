@@ -14,6 +14,7 @@ class ManejadorVehiculo {
         Vehiculo* getVehiculo(std::string matricula);
         void addVehiculo(Vehiculo* v);
         static ManejadorVehiculo* getInstance();
+        ~ManejadorVehiculo();
 };
 
 

@@ -93,7 +93,7 @@ bool CtrlViaje::generarReserva(std::string nickname, int codigo, int asientos){
     ManejadorUsuario* mUsuario = ManejadorUsuario::getInstance();
     Pasajero* p = mUsuario->getPasajero(nickname);
 
-    if(!vi->tieneCupo(asientos) || p->tieneReservaEnViaje(vi)){
+    if(vi == nullptr || p == nullptr|| !vi->tieneCupo(asientos) || p->tieneReservaEnViaje(vi)){
         return false;
     }
 

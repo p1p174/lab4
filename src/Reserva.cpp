@@ -31,4 +31,6 @@ void Reserva::eliminarCalificaciones(){ calificaciones.clear(); }
 void Reserva::setPasajero(Pasajero* p) { this->pasajero = p; }
 void Reserva::setViaje(Viaje* v) { this->viaje = v; }
 
-Reserva::~Reserva() {}
+Reserva::~Reserva() {
+    calificaciones.clear();
+}

@@ -67,6 +67,7 @@ int CtrlUsuario::registrarVehiculo(std::string nickname, std::string matricula, 
         Vehiculo* v = new Vehiculo(matricula, capacidad, marca, modelo, tipo);
         manVehiculo->addVehiculo(v);
         conduct->addVehiculo(v); //agrega el vehículo al la lista de vehiculos del conductor
+        v->setConductor(conduct);
         return 0;
     }
 }
@@ -162,6 +163,7 @@ std::set<DTUsuarioViaje*> CtrlUsuario::listarUsuariosViaje(int codigo) {
         DTUsuarioViaje* dtUV = new DTUsuarioViaje(conductor->getNickname(), TipoUsuario::Conductor_);
         listaUsuariosDelViaje.insert(dtUV);
     }
+    setCodigoMemoria(codigo);
     return listaUsuariosDelViaje;
 }
 

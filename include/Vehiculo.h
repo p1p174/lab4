@@ -39,6 +39,7 @@ public:
     void agregarViaje(Viaje* v);
     void borrarViaje(Viaje* v);
     Conductor* getConductor();
+    void setConductor(Conductor* c);
 
     ~Vehiculo();
 };

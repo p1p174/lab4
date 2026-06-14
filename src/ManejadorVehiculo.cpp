@@ -24,3 +24,10 @@ Vehiculo* ManejadorVehiculo::getVehiculo(std::string matricula) {
     }
     return it->second;
 }
+
+ManejadorVehiculo::~ManejadorVehiculo() {
+    for (auto& par : vehiculos) {
+        delete par.second;
+    }
+    vehiculos.clear();
+}

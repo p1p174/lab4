@@ -52,3 +52,11 @@ void Vehiculo::borrarViaje(Viaje* v){ viajes.erase(v); }
 Conductor* Vehiculo::getConductor() {
     return this->conductor;
 }
+
+Vehiculo::~Vehiculo() {
+    viajes.clear();
+}
+
+void Vehiculo::setConductor(Conductor* c) {
+    this->conductor = c;
+}
