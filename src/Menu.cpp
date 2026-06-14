@@ -44,7 +44,18 @@ void Menu::altaUsuario() {
             std::cout << "No se pudo registrar el pasajero. Ya existe un usuario con ese nickname.\n";
         }
     } else if (tipoUsuario == 2) {
-         std::set<TipoLibreta> libretas;
+        std::set<TipoLibreta> libretas;
+        int libreta;
+        int agregarLibreta = 1;
+        while (agregarLibreta == 1) {
+            std::cout << "Ingrese libreta (0: MotoProfesional, 1: MotoAmateur, 2: AutoProfesional, 3: AutoAmateur): ";
+            std::cin >> libreta;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            libretas.insert((TipoLibreta)libreta);
+            std::cout << "¿Agregar otra libreta? (1: Si, 0: No): ";
+            std::cin >> agregarLibreta;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
         usuarioOk = ctrlU->altaConductor(nickname, nombre, contrasena, email, libretas);
         if (usuarioOk) {
             std::cout << "Conductor registrado exitosamente.\n";

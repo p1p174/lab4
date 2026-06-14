@@ -160,13 +160,14 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
         int asientosReservados = r->getAsientosReservados();
         DTFecha fecha = r->getFecha();
         Pasajero* pasajero = r->getPasajero();
-        std::string nom_pasajero = pasajero->getNombre();
+        std::string nickname_pasajero = pasajero->getNickname();
 
-        DTDetalleReserva dtr = DTDetalleReserva(asientosReservados,fecha,nom_pasajero);
+        DTDetalleReserva dtr = DTDetalleReserva(asientosReservados,fecha,nickname_pasajero);
         reservasDT.push_back(dtr);
     }
 
     DTDetalleViaje dtvi = DTDetalleViaje(codigo,fecha,origen,destino,asientosPublicados,precio,dtv,reservasDT);
+    this->codigoMemoria = codigo; //recuerda el codigo
     return dtvi;
 }
 

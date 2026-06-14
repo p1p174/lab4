@@ -15,12 +15,7 @@ Viaje::Viaje(int codigo, DTFecha fecha, std::string origen, std::string destino,
     this->v = v;
 }
 
-Viaje::~Viaje() {
-    for (Reserva* r : reservas) {
-        delete r;
-    }
-    reservas.clear();
-}
+Viaje::~Viaje() {}
 
 bool Viaje::hayLugar(){
     return tieneCupo(1);
