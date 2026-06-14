@@ -27,6 +27,7 @@ public:
 
     std::map<std::string, Pasajero*> getPasajeros();
     Conductor* getConductor(std::string nickname);
+    Pasajero* getPasajero(std::string nickname);
 
     ~ManejadorUsuario();
 };

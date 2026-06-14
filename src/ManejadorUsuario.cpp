@@ -53,6 +53,14 @@ Conductor* ManejadorUsuario::getConductor(std::string nickname) {
     }
     return NULL;
 }
+Pasajero* ManejadorUsuario::getPasajero(std::string nickname) {
+    std::map<std::string, Usuario*>::iterator it = usuarios.find(nickname);
+    
+    if ((it->second->es_pasajero())) {
+        return (Pasajero*)it->second;
+    }
+    return NULL;
+}
 
 ManejadorUsuario::~ManejadorUsuario() {
     for (auto it = usuarios.begin(); it != usuarios.end(); ++it) {

@@ -5,9 +5,11 @@
 #include <string>
 #include <set>
 #include "Viaje.h"
+//#include "Conductor.h"
 #include "DTVehiculosConductor.h"
 
 class Viaje;
+class Conductor;
 
 class Vehiculo {
 private:
@@ -18,6 +20,7 @@ private:
     TipoVehiculo tipo;
 
     std::set<Viaje*> viajes;
+    Conductor* conductor;
 
 public:
     Vehiculo(std::string matricula, int capacidad, std::string marca, std::string modelo, TipoVehiculo tipo);
@@ -31,8 +34,11 @@ public:
     int getCapacidad();
     std::string getMarca();
     std::string getModelo();
+    TipoVehiculo getTipo();
     std::set<Viaje*> getViajes();
-
+    void agregarViaje(Viaje* v);
+    void borrarViaje(Viaje* v);
+    Conductor* getConductor();
 
     ~Vehiculo();
 };

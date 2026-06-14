@@ -22,7 +22,8 @@ bool Vehiculo::hayViajesFecha(DTFecha fecha) {
 }
 
 DTVehiculosConductor Vehiculo::getDTVehiculosConductor() {
-    return DTVehiculosConductor(this->matricula, this->capacidad, this->marca, this->modelo, this->tipo);
+    // no estoy muy seguro de si va marca o modelo
+    return DTVehiculosConductor(this->matricula, this->marca, this->capacidad);
 }
 
 std::string Vehiculo::getMatricula() {
@@ -40,7 +41,14 @@ std::string Vehiculo::getMarca() {
 std::string Vehiculo::getModelo() {
     return this->modelo;
 }
+TipoVehiculo Vehiculo::getTipo() { return this->tipo; }
 
 std::set<Viaje*> Vehiculo::getViajes() {
     return this->viajes;
+}
+void Vehiculo::agregarViaje(Viaje* v){ viajes.insert(v); }
+void Vehiculo::borrarViaje(Viaje* v){ viajes.erase(v); }
+
+Conductor* Vehiculo::getConductor() {
+    return this->conductor;
 }

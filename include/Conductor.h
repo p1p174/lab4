@@ -4,11 +4,11 @@
 #include "Usuario.h"
 #include "TipoLibreta.h"
 #include "TipoVehiculo.h"
-//#include "Vehiculo.h"
+#include "Vehiculo.h"
 #include "DTVehiculosConductor.h"
 #include <set>
 
-class Vehiculo;
+//class Vehiculo;
 
 class Conductor : public Usuario {
 private:
@@ -26,6 +26,7 @@ public:
 
     //agrego getter -pia-
     std::set<Vehiculo*> getVehiculos();
+    std::set<TipoLibreta> getLibretas();
 };
 
 #endif
