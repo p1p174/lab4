@@ -2,20 +2,30 @@
 #define MANEJADORVIAJE_H
 
 #include "Viaje.h"
+#include "DTFecha.h"
+#include <map>
+#include <set>
+#include <string>
 
-class ManejadorViaje{
+class Vehiculo;
+
+class ManejadorViaje {
 private:
     static ManejadorViaje* instancia;
     ManejadorViaje();
-    Map<int, Viaje> Viajes;
+    std::map<int, Viaje*> viajes;
+
 public:
-    Viaje* getViaje();
-    void addViaje(Viaje* vi);
-    set<Viaje*> filtrarViajes(DTFecha fecha, std::string origen, std::string destino, int asientos);
-    ManejadorViaje* getInstance();
-    Viaje* create(Vehiculo* v, DTFecha fecha, std::string origen, std::string destino, int asientos, float precio) = 0; //abs -definico en viaje- es de clase pq no necesito instnciar un objeto para crearlo
+    static ManejadorViaje* getInstance();
 
+    void add(Viaje* vi);
+    Viaje* crearViaje(Vehiculo* v, DTFecha fecha, std::string origen,std::string destino, int asientos, float precio);
+    Viaje* getViaje(int codigo);
+    std::map<int, Viaje*> getViajes();
+    std::set<Viaje*> filtrarViajes(DTFecha fecha, std::string origen,std::string destino, int asientos);
+    void eliminarViaje(int codigo);
 
-
+    ~ManejadorViaje();
+};
 
 #endif

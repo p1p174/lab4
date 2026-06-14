@@ -16,7 +16,7 @@ void Pasajero::eliminarReserva(Reserva* r) {
 
 bool Pasajero::tieneReservaEnViaje(Viaje* viaje) {
     if (viaje == NULL){ return false; }
-    std::list<Reserva*>& reservas = viaje->getReservas();
+    std::list<Reserva*> reservas = viaje->getReservas();
     
     // se recorre el conj. de las reservas hechas sobre el viaje
     for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {

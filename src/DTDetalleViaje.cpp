@@ -8,7 +8,7 @@ DTDetalleViaje::DTDetalleViaje(int codigo, DTFecha fecha, std::string origen, st
     this->destino = destino;
     this->asientosPublicados = asientosPublicados;
     this->precio = precio;
-}, vehiculo(vehi), reservas(res) {}
+};vehiculo(vehi), reservas(res) {}
 
 int DTDetalleViaje::getCodigo() { return codigo; }
 DTFecha DTDetalleViaje::getFecha() { return fecha; }

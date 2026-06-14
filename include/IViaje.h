@@ -21,6 +21,6 @@ public:
     
     virtual void eliminarViaje() = 0;
     virtual void cancelarEliminarViaje() = 0;
-}
+};
 
 #endif
