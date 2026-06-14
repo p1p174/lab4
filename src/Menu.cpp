@@ -44,6 +44,7 @@ void Menu::altaUsuario() {
             std::cout << "No se pudo registrar el pasajero. Ya existe un usuario con ese nickname.\n";
         }
     } else if (tipoUsuario == 2) {
+         std::set<TipoLibreta> libretas;
         usuarioOk = ctrlU->altaConductor(nickname, nombre, contrasena, email, libretas);
         if (usuarioOk) {
             std::cout << "Conductor registrado exitosamente.\n";
