@@ -1,6 +1,6 @@
 #include "../include/Sistema.h"
 
-Fabrica* Fabrica::instancia = nullptr;
+Sistema* Sistema::instancia = nullptr;
 
 Sistema::Sistema() {}
 

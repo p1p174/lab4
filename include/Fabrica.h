@@ -4,6 +4,8 @@
 #include "IControladorFechaActual.h"
 #include "IUsuario.h"
 #include "IViaje.h"
+#include "ControladorUsuario.h"
+#include "CtrlViaje.h"
 
 class Fabrica {
 private:

@@ -16,12 +16,12 @@ private:
 public:
   DTConsultaViaje(int codigo, std::string marca, std::string modelo, std::string conductor, float calificacionProm, float precioTotal);
 
-  int getCodigo();
-  std::string getMarca();
-  std::string getModelo();
-  std::string getConductor();
-  float getCalificacionProm();
-  float getPrecioTotal();
+  int getCodigo() const;
+  std::string getMarca() const;
+  std::string getModelo() const;
+  std::string getConductor() const;
+  float getCalificacionProm() const;
+  float getPrecioTotal() const;
 
   //agrego definicion del operador <
   bool operator<(const DTConsultaViaje& otro) const {
