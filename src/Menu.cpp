@@ -8,6 +8,10 @@
 #include <string>
 
 void Menu::altaUsuario() {
+
+    Fabrica* fabrica = Fabrica::getInstance();
+    IUsuario* ctrlU = fabrica->getIUsuario();
+
     int tipoUsuario;
     std::cout << "1. Alta Pasajero\n";
     std::cout << "2. Alta Conductor\n";
@@ -32,9 +36,20 @@ void Menu::altaUsuario() {
     if (tipoUsuario == 1) {
         std::string ci;
         std::cout << "Ingrese CI: "; std::getline(std::cin, ci);
-        //TODO: usuarioOk = controlador->altaPasajero(nickname, nombre, contrasena, email, ci)
+        usuarioOk = ctrlU->altaPasajero(nickname, nombre, contrasena, email, ci);
+        //agrego esto. que les parece?
+        if (usuarioOk) {
+            std::cout << "Pasajero registrado exitosamente.\n";
+        } else {
+            std::cout << "No se pudo registrar el pasajero. Ya existe un usuario con ese nickname.\n";
+        }
     } else if (tipoUsuario == 2) {
-        //TODO: usuarioOk = controlador->altaConductor(nickname, nombre, contrasena, email, libretas)
+        usuarioOk = ctrlU->altaConductor(nickname, nombre, contrasena, email, libretas);
+        if (usuarioOk) {
+            std::cout << "Conductor registrado exitosamente.\n";
+        } else {
+            std::cout << "No se pudo registrar el conductor. Ya existe un usuario con ese nickname.\n";
+        }
         int agregarVehiculo = 1;
         while (usuarioOk == true && agregarVehiculo == 1) {
             std::string matricula, marca, modelo;
@@ -48,7 +63,15 @@ void Menu::altaUsuario() {
             std::cout << "Ingrese tipo (0: Auto, 1: Moto): "; std::cin >> tipo;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             int resultadoRegistrarVehiculo = -3;
-            //TODO: resultadoRegistrarVehiculo = controlador->registrarVehiculo(nickname, matricula, capacidad, marca, modelo, tipo)
+            if (tipo == 0) {
+                resultadoRegistrarVehiculo = ctrlU->registrarVehiculo(nickname, matricula, capacidad, marca, modelo, TipoVehiculo::Auto);
+
+            } else if (tipo == 1) {
+                resultadoRegistrarVehiculo = ctrlU->registrarVehiculo(nickname, matricula, capacidad, marca, modelo, TipoVehiculo::Moto);
+            } else {
+                std::cout << "Tipo de vehiculo invalido.\n";
+                continue;
+            }
             if (resultadoRegistrarVehiculo == -1) {
                 std::cout << "Ya existe un vehiculo con esa matricula.\n";
             } else if (resultadoRegistrarVehiculo == -2) {
