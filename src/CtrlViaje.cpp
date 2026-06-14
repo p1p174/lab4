@@ -17,6 +17,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 
 CtrlViaje* CtrlViaje::instancia = nullptr; // inicializo la intancia
 
@@ -52,11 +53,11 @@ bool CtrlViaje::altaViaje(std::string matricula, DTFecha fecha, std::string orig
     return true;
 }
 
-std::set<string> CtrlViaje::listarPasajeros(){
+std::set<std::string> CtrlViaje::listarPasajeros(){
     ManejadorUsuario* mUsuario = ManejadorUsuario::getInstance();
-    std::map<string, Pasajero*> pasajeros = mUsuario->getPasajeros();
+    std::map<std::string, Pasajero*> pasajeros = mUsuario->getPasajeros();
 
-    std::set<string> nicknames;
+    std::set<std::string> nicknames;
     for(auto& par : pasajeros){
         nicknames.insert(par.first); // par.first tiene el nickname -string-
     }
@@ -92,7 +93,7 @@ bool CtrlViaje::generarReserva(std::string nickname, int codigo, int asientos){
     ManejadorUsuario* mUsuario = ManejadorUsuario::getInstance();
     Pasajero* p = mUsuario->getPasajero(nickname);
 
-    if(!vi->tieneCupo(asientos) || p->tieneReservaEnViaje(vi)){
+    if(vi == nullptr || p == nullptr|| !vi->tieneCupo(asientos) || p->tieneReservaEnViaje(vi)){
         return false;
     }
 
@@ -111,7 +112,7 @@ bool CtrlViaje::generarReserva(std::string nickname, int codigo, int asientos){
 }
 
 std::set<DTListarViaje*> CtrlViaje::listarViajes(){
-    ManejadorViaje* mViaje = ManejadorViaje::getInstance()
+    ManejadorViaje* mViaje = ManejadorViaje::getInstance();
     std::map<int,Viaje*> viajes = mViaje->getViajes();
 
     std::set<DTListarViaje*> resultado;
@@ -137,7 +138,7 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
     ManejadorViaje* mViaje = ManejadorViaje::getInstance();
     Viaje* vi = mViaje->getViaje(codigo);
 
-    int codigo = vi->getCodigo();
+    //int codigo_vi = vi->getCodigo();
     DTFecha fecha = vi->getFecha();
     std::string origen = vi->getOrigen();
     std::string destino = vi->getDestino();
@@ -158,9 +159,10 @@ DTDetalleViaje CtrlViaje::detalleViaje(int codigo){
     for(Reserva* r : vi->getReservas()){
         int asientosReservados = r->getAsientosReservados();
         DTFecha fecha = r->getFecha();
-        std::string pasajero = r->getPasajero();
+        Pasajero* pasajero = r->getPasajero();
+        std::string nom_pasajero = pasajero->getNombre();
 
-        DTDetalleReserva dtr = DTDetalleReserva(asientosReservados,fecha,pasajero);
+        DTDetalleReserva dtr = DTDetalleReserva(asientosReservados,fecha,nom_pasajero);
         reservasDT.push_back(dtr);
     }
 
@@ -187,10 +189,10 @@ void CtrlViaje::eliminarViaje(){
 
     //desasociar viaje de vehiculo
     Vehiculo* v = vi->getVehiculo();
-    v->eliminarViaje(vi);
+    v->borrarViaje(vi);
 
     //eliminar viaje del manejador
-    mViaje->eliminarViaje(vi);
+    mViaje->eliminarViaje(vi->getCodigo());
 
     //borro viaje
     delete vi;

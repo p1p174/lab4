@@ -1,4 +1,11 @@
 #include "../include/Conductor.h"
+//#include "../include/TipoVehiculo.h"
+#include "../include/TipoLibreta.h"
+//#include "../include/Usuario.h"
+#include "../include/DTVehiculosConductor.h"
+#include "../include/Viaje.h"
+
+#include <set>
 
 Conductor::Conductor(std::string nickname, std::string nombre, std::string contrasena, std::string email, std::set<TipoLibreta> libs)
     : Usuario(nickname, nombre, contrasena, email) {
@@ -6,17 +13,36 @@ Conductor::Conductor(std::string nickname, std::string nombre, std::string contr
 }
 bool Conductor::es_pasajero() { return false; }
 
+std::set<TipoLibreta> Conductor::getLibretas(){
+    return this->libretas;
+}
+
 
 void Conductor::addVehiculo(Vehiculo* v) {
     this->vehiculos.insert(v);
 }
 
 bool Conductor::puedeRegistrar(TipoVehiculo tipo) {
-    
+    std::set<TipoLibreta> libretas = getLibretas();
+
+    if (tipo==Moto && ( libretas.find(MotoAmateur) != libretas.end() ||
+        libretas.find(MotoProfesional) != libretas.end() )) {
+            return true;
+    } else if (tipo==Auto && ( libretas.find(AutoAmateur) != libretas.end() ||
+        libretas.find(AutoProfesional) != libretas.end() )) {
+        return true;
+    }
+
     return false;
 }
 
+//agrego getter -pia-
+std::set<Vehiculo*> Conductor::getVehiculos(){
+    return this->vehiculos;
+}
+
 bool Conductor::hayViajesFechaConductor(DTFecha fecha) {
+    std::set<Vehiculo*> vehiculos = getVehiculos();
     for (Vehiculo* v: vehiculos) {
         if (v->hayViajesFecha(fecha)) {
             return true;
@@ -25,10 +51,11 @@ bool Conductor::hayViajesFechaConductor(DTFecha fecha) {
     return false;
 }
 
-std::set<DTVehiculoConductor> Conductor::listarVehiculos() {
-    std::set<DTVehiculoConductor> result;
+std::set<DTVehiculosConductor> Conductor::listarVehiculos() {
+    std::set<DTVehiculosConductor> result;
+    std::set<Vehiculo*> vehiculos = getVehiculos();
     for (Vehiculo* v: vehiculos) {
-        result.insert(v->getDTVehiculoConductor());
+        result.insert(v->getDTVehiculosConductor());
     }
     return result;
 }

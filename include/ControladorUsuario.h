@@ -6,6 +6,8 @@
 #include "ManejadorVehiculo.h"
 #include "ManejadorViaje.h"
 #include "Pasajero.h"
+#include "Conductor.h"
+#include "Reserva.h"
 #include "Vehiculo.h"
 #include "Viaje.h"
 

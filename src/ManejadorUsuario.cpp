@@ -1,4 +1,7 @@
 #include "../include/ManejadorUsuario.h"
+#include "../include/Usuario.h"
+#include "../include/Pasajero.h"
+#include "../include/Conductor.h"
 
 ManejadorUsuario* ManejadorUsuario::instancia = nullptr;
 ManejadorUsuario::ManejadorUsuario() {}
@@ -47,6 +50,14 @@ Conductor* ManejadorUsuario::getConductor(std::string nickname) {
     
     if (!(it->second->es_pasajero())) {
         return (Conductor*)it->second;
+    }
+    return NULL;
+}
+Pasajero* ManejadorUsuario::getPasajero(std::string nickname) {
+    std::map<std::string, Usuario*>::iterator it = usuarios.find(nickname);
+    
+    if ((it->second->es_pasajero())) {
+        return (Pasajero*)it->second;
     }
     return NULL;
 }

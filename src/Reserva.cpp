@@ -6,8 +6,31 @@ Reserva::Reserva(int asientosReservados, DTFecha fecha) {
 }
 
 
-int getAsientosReservados(){
-    getAsientosReservados = this->asientosReservados;
+int Reserva::getAsientosReservados(){
+    return this->asientosReservados;
 };
+DTFecha Reserva::getFecha(){ return this->fecha; };
 
-Reserva::~Reserva() {}
+Pasajero* Reserva::getPasajero(){ return this->pasajero; };
+Viaje* Reserva::getViaje(){ return this->viaje; };
+
+std::set<Calificacion*> Reserva::getCalificaciones() {
+    return this->calificaciones;
+}
+
+void Reserva::agregarCalificacion(Calificacion* cal) {
+    calificaciones.insert(cal);
+}
+
+void Reserva::eliminarCalificacion(Calificacion* cal) {
+    calificaciones.erase(cal);
+}
+
+void Reserva::eliminarCalificaciones(){ calificaciones.clear(); }
+
+void Reserva::setPasajero(Pasajero* p) { this->pasajero = p; }
+void Reserva::setViaje(Viaje* v) { this->viaje = v; }
+
+Reserva::~Reserva() {
+    calificaciones.clear();
+}

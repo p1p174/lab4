@@ -1,11 +1,12 @@
 IDIR = include
 CC = g++
-CFLAGS = -std=c++98 -Wall -Wextra -I$(IDIR) -g
+//CFLAGS = -std=c++98 -Wall -Wextra -I$(IDIR) -g
+CFLAGS = -std=c++11 -Wall -Wextra -I$(IDIR) -g
 
 CPPDIR = src
 ODIR = obj
 
-ARCHIVOS = Calificacion CargaDatos Conductor ControladorFechaActual ControladorUsuario CtrlViaje DTConsultaViaje DTDetalleReserva DTDetalleVehiculo DTDetalleViaje DTFecha DTListarViaje DTUsuario DTUsuarioViaje DTVehiculosConductor Fabrica IControladorFechaActual IUsuario IViaje ManejadorUsuario ManejadorVehiculo ManejadorViaje Pasajero Reserva TipoLibreta TipoUsuario TipoVehiculo Usuario Vehiculo Viaje
+ARCHIVOS = Calificacion CargaDatos Conductor ControladorFechaActual ControladorUsuario CtrlViaje DTConsultaViaje DTDetalleReserva DTDetalleVehiculo DTDetalleViaje DTFecha DTListarViaje DTUsuario DTUsuarioViaje DTVehiculosConductor Fabrica ManejadorUsuario ManejadorVehiculo ManejadorViaje Pasajero Reserva Usuario Vehiculo Viaje Sistema Menu
 MODULOS = $(ARCHIVOS)
 
 HS   = $(MODULOS:%=$(IDIR)/%.h)

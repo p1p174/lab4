@@ -12,12 +12,17 @@ Viaje::Viaje(int codigo, DTFecha fecha, std::string origen, std::string destino,
     this->destino = destino;
     this->asientosPublicados = asientosPublicados;
     this->precio = precio;
-    this->vehiculo = v;
+    this->v = v;
 }
 
-Viaje::~Viaje() {}
+Viaje::~Viaje() {
+    for (Reserva* r : reservas) {
+        delete r;
+    }
+    reservas.clear();
+}
 
-bool Viaje::haylugar(){
+bool Viaje::hayLugar(){
     return tieneCupo(1);
 }
 
@@ -62,7 +67,7 @@ std::string Viaje::getOrigen(){
 }
 
 std::string Viaje::getDestino(){
-    return this->destino
+    return this->destino;
 }
 
 int Viaje::getAsientosPublicados(){

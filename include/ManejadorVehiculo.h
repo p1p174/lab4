@@ -1,7 +1,8 @@
 #ifndef MANEJADOR_VEHICULO_H
 #define MANEJADOR_VEHICULO_H
 #include "Vehiculo.h"
-
+#include <map>
+#include <string>
 
 class ManejadorVehiculo {
     private:
@@ -13,7 +14,7 @@ class ManejadorVehiculo {
         Vehiculo* getVehiculo(std::string matricula);
         void addVehiculo(Vehiculo* v);
         static ManejadorVehiculo* getInstance();
-        Vehiculo* getVehiculo(std::string matricula);
+        ~ManejadorVehiculo();
 };
 
 

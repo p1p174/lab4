@@ -67,6 +67,7 @@ int CtrlUsuario::registrarVehiculo(std::string nickname, std::string matricula, 
         Vehiculo* v = new Vehiculo(matricula, capacidad, marca, modelo, tipo);
         manVehiculo->addVehiculo(v);
         conduct->addVehiculo(v); //agrega el vehículo al la lista de vehiculos del conductor
+        v->setConductor(conduct);
         return 0;
     }
 }
@@ -106,7 +107,7 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
     if (user->es_pasajero()) {
         //es pasajero
         Pasajero* p = dynamic_cast<Pasajero*>(user);
-        std::list<Reserva*>& reservas = p->getReservas();
+        std::list<Reserva*> reservas = p->getReservas();
 
         for (std::list<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
             Viaje* vi = (*it)->getViaje();
@@ -120,10 +121,10 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
         }
     } else {
         Conductor* c = dynamic_cast<Conductor*>(user);
-        std::set<Vehiculo*>& vehiculos = c->getVehiculos();
+        std::set<Vehiculo*> vehiculos = c->getVehiculos();
         
         for (std::set<Vehiculo*>::iterator it = vehiculos.begin(); it != vehiculos.end(); ++it) {
-            std::set<Viaje*>& viajes = (*it)->getViajes();
+            std::set<Viaje*> viajes = (*it)->getViajes();
             for (std::set<Viaje*>::iterator iter = viajes.begin(); iter != viajes.end(); ++iter) {
                 int codigoVi = (*iter)->getCodigo();
                 DTFecha fechaVi = (*iter)->getFecha();
@@ -144,7 +145,7 @@ std::set<DTListarViaje*> CtrlUsuario::listarViajes(std::string nickname) {
 std::set<DTUsuarioViaje*> CtrlUsuario::listarUsuariosViaje(int codigo) {
     ManejadorViaje* manViaje = ManejadorViaje::getInstance();
     Viaje* viaje = manViaje->getViaje(codigo); // viaje con el código pasado por parámetro
-    std::set<Reserva*>& reservas = viaje->getReservas(); // reservas del viaje
+    std::set<Reserva*> reservas = viaje->getReservas(); // reservas del viaje
     Vehiculo* vehiculo = viaje->getVehiculo(); // vehículo del viaje
     Conductor* conductor = vehiculo->getConductor(); // conductor del viaje
     std::string nicknameMem = getNicknameMemoria(); // nickname en memoria
@@ -162,6 +163,7 @@ std::set<DTUsuarioViaje*> CtrlUsuario::listarUsuariosViaje(int codigo) {
         DTUsuarioViaje* dtUV = new DTUsuarioViaje(conductor->getNickname(), TipoUsuario::Conductor_);
         listaUsuariosDelViaje.insert(dtUV);
     }
+    setCodigoMemoria(codigo);
     return listaUsuariosDelViaje;
 }
 
@@ -173,19 +175,21 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     ManejadorViaje* manViaje = ManejadorViaje::getInstance();
     Viaje* viaje = manViaje->getViaje(this->getCodigoMemoria());
 
-    std::set<Reserva*>& reservas = viaje->getReservas();
+    std::set<Reserva*> reservas = viaje->getReservas();
     Reserva* reserv = NULL;
     Reserva* reservUserCador = NULL;
     
     // se recorre el conj. de las reservas hechas sobre el viaje
     for (std::set<Reserva*>::iterator it = reservas.begin(); it != reservas.end(); ++it) {
-            Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
+        Pasajero* pa = (*it)->getPasajero(); // pasajero que hizo la reserva
+        if (pa != nullptr){
             if (pa->getNickname() == usuCado->getNickname()) {
                 reserv = (*it); //reserva que hizo usuCado en el viaje en cuestión
             }
             if (pa->getNickname() == userCador->getNickname()) {
                 reservUserCador = (*it); //reserva que hizo usuCador en el viaje en cuestión
             }
+        }
     }
     if (reserv==NULL && reservUserCador==NULL) { return false; }
 
@@ -195,7 +199,7 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
     }
 
     //obtengo las calificaciones hechas sobre la reserva
-    std::set<Calificacion*>& calificacionesReserva = reservaAVerificar->getCalificaciones();
+    std::set<Calificacion*> calificacionesReserva = reservaAVerificar->getCalificaciones();
     for (std::set<Calificacion*>::iterator it = calificacionesReserva.begin(); it != calificacionesReserva.end(); ++it) {
             Usuario* usu = (*it)->getUsuario(); // usuario que hizo la calificación
             if (usu->getNickname() == userCador->getNickname()) {
@@ -204,8 +208,8 @@ bool CtrlUsuario::calificarUsuario(std::string nicknameCalificado, int calificac
                 // entonces no puede hacer otra
             }
     }
-    DTFecha* fechaActual = Sistema::getInstance()->getFabrica()->getIControladorFechaActual()->getFechaActual();
-    Calificacion* cal = new Calificacion(*fechaActual, calificacion);
+    DTFecha fechaActual = Sistema::getInstance()->getFabrica()->getIControladorFechaActual()->getFecha();
+    Calificacion* cal = new Calificacion(fechaActual, calificacion, usuCado);
     userCador->agregarCalRealizada(cal);
     usuCado->agregarCalRecibida(cal);
 
