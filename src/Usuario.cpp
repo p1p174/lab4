@@ -42,7 +42,7 @@ float Usuario::getCalificacionPromedio() {
 
         iter++;
     }
-    if (cantCals == 0) return 0;
+    if (cantCals == 0) return 5;
     else return suma/cantCals;
 }
 
