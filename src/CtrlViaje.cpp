@@ -76,11 +76,11 @@ std::set<DTConsultaViaje*> CtrlViaje::consultarViajes(DTFecha fecha, std::string
         int codigo = vi->getCodigo();
         std::string marca = v->getMarca();
         std::string modelo = v->getModelo();
-        std::string nickname = c->getNickname();
+        std::string nombre = c->getNombre();
         float calificacionPromedio = c->getCalificacionPromedio();
         float precio = vi->getPrecio() * asientos;
 
-        DTConsultaViaje* dt = new DTConsultaViaje(codigo,marca,modelo,nickname,calificacionPromedio,precio);
+        DTConsultaViaje* dt = new DTConsultaViaje(codigo,marca,modelo,nombre,calificacionPromedio,precio);
         resultado.insert(dt);
     }
     return resultado;
