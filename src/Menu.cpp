@@ -298,7 +298,7 @@ void Menu::calificarUsuario() {
     //TODO: Recorrer la coleccion y mostrar "> Nickname: xx, Tipo: yyy"
     for (std::set<DTUsuarioViaje*>::iterator it = conjUV.begin(); it != conjUV.end(); ++it) {
         DTUsuarioViaje* uv = *it;
-        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << uv->getTipo()  << std::endl; //== Tipo.Usuario_ ? "Conductor" : "Pasajero")
+        std::cout << "> Nickname: " << uv->getNickname() << ", Tipo: " << (uv->getTipo() == TipoUsuario_::Conductor ? "Conductor" : "Pasajero") << std::endl; 
     }
     ///////
     std::string nicknameCalificado;
